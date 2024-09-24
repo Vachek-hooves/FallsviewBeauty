@@ -36,7 +36,7 @@ const WaterDropsPlayGameScreen = () => {
           y: 0,
         };
         setDrops(prev => [...prev, newDrop]);
-      }, 500);
+      }, 800);
 
       return () => clearInterval(dropInterval);
     }
@@ -48,10 +48,10 @@ const WaterDropsPlayGameScreen = () => {
         setDrops(prev =>
           prev.map(drop => ({
             ...drop,
-            y: drop.y + 5,
+            y: drop.y + 2,
           })).filter(drop => drop.y < height * 0.6)
         );
-      }, 50);
+      }, 1);
 
       return () => clearInterval(fallInterval);
     }
