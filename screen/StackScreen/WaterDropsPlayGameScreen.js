@@ -10,6 +10,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 import {PlayGameLayou, WaterGameLayout} from '../../components/layout';
+import {ReturnIcon} from '../../components/ui/icons';
 
 const {width, height} = Dimensions.get('window');
 
@@ -60,7 +61,7 @@ const WaterDropsPlayGameScreen = () => {
               ...drop,
               y: drop.y + 2,
             }))
-            .filter(drop => drop.y < height * 0.7),
+            .filter(drop => drop.y < height * 0.65),
         );
       }, 1);
 
@@ -105,6 +106,7 @@ const WaterDropsPlayGameScreen = () => {
             ))}
             {/* </PlayGameLayou> */}
           </View>
+          <ReturnIcon />
         </>
       )}
     </WaterGameLayout>
