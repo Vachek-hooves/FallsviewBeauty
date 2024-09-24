@@ -1,11 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React from 'react';
 
-const WaterGameLayout = () => {
+const WaterGameLayout = ({children}) => {
   return (
-    <View>
-      <Text>WaterGameLayout</Text>
-    </View>
+    <ImageBackground
+      blurRadius={0}
+      source={require('../../assets/img/bg/waterfall2.jpg')}
+      style={{flex: 1, alignItems: 'center'}}>
+      <SafeAreaView>{children}</SafeAreaView>
+    </ImageBackground>
   );
 };
 

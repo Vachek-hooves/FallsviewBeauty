@@ -5,9 +5,11 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  ImageBackground,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import {PlayGameLayou, WaterGameLayout} from '../../components/layout';
 
 const {width, height} = Dimensions.get('window');
 
@@ -58,7 +60,7 @@ const WaterDropsPlayGameScreen = () => {
               ...drop,
               y: drop.y + 2,
             }))
-            .filter(drop => drop.y < height * 0.6),
+            .filter(drop => drop.y < height * 0.7),
         );
       }, 1);
 
@@ -72,14 +74,24 @@ const WaterDropsPlayGameScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
+    <WaterGameLayout>
       {gameOver ? (
         <Text style={styles.finalScore}>Game Over! Your Score: {score}</Text>
       ) : (
         <>
-          <Text style={styles.score}>Score: {score}</Text>
-          <Text style={styles.timer}>Time Left: {timeLeft}s</Text>
+          <View style={styles.scoreContainer}>
+            <Text style={styles.score}>Score: {score}</Text>
+            <Text style={styles.timer}>
+              Time Left:{' '}
+              <Text style={{color: timeLeft <= 10 ? 'red' : 'white'}}>
+                {timeLeft}
+              </Text>
+              s
+            </Text>
+          </View>
           <View style={styles.gameField}>
+            {/* <PlayGameLayou> */}
             {drops.map(drop => (
               <TouchableOpacity
                 key={drop.id}
@@ -91,16 +103,23 @@ const WaterDropsPlayGameScreen = () => {
                 />
               </TouchableOpacity>
             ))}
+            {/* </PlayGameLayou> */}
           </View>
         </>
       )}
-    </View>
+    </WaterGameLayout>
+    // </View>
   );
 };
 
 export default WaterDropsPlayGameScreen;
 
 const styles = StyleSheet.create({
+  scoreContainer: {
+    backgroundColor: 'rgba(3,138,255,0.8)',
+    borderRadius: 12,
+    paddingVertical: 10,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -109,23 +128,32 @@ const styles = StyleSheet.create({
   score: {
     fontSize: 24,
     marginBottom: 10,
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    letterSpacing: 2,
   },
   timer: {
     fontSize: 24,
     marginBottom: 10,
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    letterSpacing: 2,
   },
   gameField: {
-    width: width * 0.9,
-    height: height * 0.6,
-    backgroundColor: '#e0f7fa',
+    width: width * 0.95,
+    height: height * 0.75,
+    // backgroundColor: '#e0f7fa',
     position: 'relative',
     overflow: 'hidden',
+    borderRadius: 20,
   },
   drop: {
     width: 30,
     height: 30,
     borderRadius: 10,
-    backgroundColor: '#007aff',
+    // backgroundColor: '#007aff',
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
