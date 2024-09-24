@@ -46,7 +46,7 @@ const WaterDropsPlayGameScreen = () => {
           y: 0,
         };
         setDrops(prev => [...prev, newDrop]);
-      }, 800);
+      }, 900);
 
       return () => clearInterval(dropInterval);
     }
