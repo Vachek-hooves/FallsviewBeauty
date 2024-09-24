@@ -1,6 +1,13 @@
-import {StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 const {width, height} = Dimensions.get('window');
 
@@ -46,10 +53,12 @@ const WaterDropsPlayGameScreen = () => {
     if (timeLeft > 0) {
       const fallInterval = setInterval(() => {
         setDrops(prev =>
-          prev.map(drop => ({
-            ...drop,
-            y: drop.y + 2,
-          })).filter(drop => drop.y < height * 0.6)
+          prev
+            .map(drop => ({
+              ...drop,
+              y: drop.y + 2,
+            }))
+            .filter(drop => drop.y < height * 0.6),
         );
       }, 1);
 
@@ -57,7 +66,7 @@ const WaterDropsPlayGameScreen = () => {
     }
   }, [timeLeft]);
 
-  const handleCatch = (id) => {
+  const handleCatch = id => {
     setDrops(prev => prev.filter(drop => drop.id !== id));
     setScore(prev => prev + 10);
   };
@@ -75,8 +84,12 @@ const WaterDropsPlayGameScreen = () => {
               <TouchableOpacity
                 key={drop.id}
                 style={[styles.drop, {left: drop.x, top: drop.y}]}
-                onPress={() => handleCatch(drop.id)}
-              />
+                onPress={() => handleCatch(drop.id)}>
+                <Image
+                  source={require('../../assets/img/gameImg/waterDrop.png')}
+                  style={{width: 35, height: 35}}
+                />
+              </TouchableOpacity>
             ))}
           </View>
         </>
@@ -109,11 +122,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   drop: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     borderRadius: 10,
     backgroundColor: '#007aff',
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
   },
   finalScore: {
     fontSize: 30,
