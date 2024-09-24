@@ -1,3 +1,4 @@
-import FallsGameLevelsScreen from './FallsGameLevelsScreen';
+import WaterDropsPlayGameScreen from './WaterDropsPlayGameScreen';
+import WelcomeScreen from './WelcomeScreen';
 
-export {FallsGameLevelsScreen};
+export {WaterDropsPlayGameScreen, WelcomeScreen};

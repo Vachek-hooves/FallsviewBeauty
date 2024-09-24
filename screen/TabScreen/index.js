@@ -1,3 +1,3 @@
-import WelcomeScreen from './WelcomeScreen';
+import WaterDropsScreen from './WaterDropsScreen';
 
-export {WelcomeScreen};
+export {WaterDropsScreen};

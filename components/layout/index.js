@@ -1,3 +1,4 @@
 import TabLayout from './TabLayout';
+import StackLayout from './StackLayout';
 
-export {TabLayout};
+export {TabLayout, StackLayout};
