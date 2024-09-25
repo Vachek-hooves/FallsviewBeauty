@@ -1,1 +1,1 @@
-export const WaterDropsGame = [{id: 'l1', score: 0, speed: 2}];
+export const WaterDropsGame = [{id: 1, score: 0, speed: 2}];
