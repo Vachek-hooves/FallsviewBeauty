@@ -23,6 +23,7 @@ import {
 } from './screen/StackScreen';
 import {View} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+import QuizPlayScreen from './screen/StackScreen/QuizPlayScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -119,6 +120,7 @@ function App() {
             component={WaterDropsPlayGameScreen}
           />
           <Stack.Screen name="QuizLevelsGrid" component={QuizLevelsGrid} />
+          <Stack.Screen name="QuizPlayScreen" component={QuizPlayScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </FallsProvider>

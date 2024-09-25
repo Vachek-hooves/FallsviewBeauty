@@ -6,10 +6,10 @@ import {
   View,
 } from 'react-native';
 
-const QuizLayout = ({children}) => {
+const QuizLayout = ({children, blur}) => {
   return (
     <ImageBackground
-      blurRadius={0}
+      blurRadius={blur}
       source={require('../../assets/img/bg/fantasyFall.jpg')}
       style={{flex: 1, alignItems: 'center'}}>
       <SafeAreaView>{children}</SafeAreaView>
