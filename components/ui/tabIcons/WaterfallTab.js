@@ -1,12 +1,12 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 
-const WaterfallTab = () => {
+const WaterfallTab = ({ focused }) => {
   return (
-    <View>
+    <View style={[styles.iconContainer, focused && styles.focusedContainer]}>
       <Image
         source={require('../../../assets/icon/tabMenu/waterfallTab.png')}
-        style={{width: 45, height: 45}}
+        style={styles.icon}
       />
     </View>
   );
@@ -14,4 +14,19 @@ const WaterfallTab = () => {
 
 export default WaterfallTab;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  iconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  focusedContainer: {
+    backgroundColor: '#87CEEB', // Sky Blue
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+});

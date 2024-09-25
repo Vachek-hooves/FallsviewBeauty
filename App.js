@@ -18,29 +18,66 @@ import {
   FallsGameLevelsScreen,
   WaterDropsPlayGameScreen,
 } from './screen/StackScreen';
+import {View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabMenu = () => {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false, title: ''}}>
-      <Tab.Screen
-        name="WaterDropsScreen"
-        component={WaterDropsScreen}
-        options={{tabBarIcon: () => <WaterfallTab />}}
-      />
-      <Tab.Screen
-        name="QuizIntroScreen"
-        component={QuizIntroScreen}
-        options={{tabBarIcon: () => <QuziTab />}}
-      />
-      <Tab.Screen
-        name="ArticleScreen"
-        component={ArticleScreen}
-        options={{tabBarIcon: () => <ArticleTab />}}
-      />
-    </Tab.Navigator>
+    <View style={{ flex: 1, backgroundColor: '#F0F8FF' }}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          title: '',
+          tabBarStyle: {
+            backgroundColor: 'white',
+            position: 'absolute',
+            bottom: 20,
+            left: 20,
+            right: 20,
+            elevation: 0,
+            borderRadius: 15,
+            height: 60,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.5,
+          },
+          tabBarItemStyle: {
+            height: 60,
+            padding: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        }}
+      >
+        <Tab.Screen
+          name="WaterDropsScreen"
+          component={WaterDropsScreen}
+          options={{
+            tabBarIcon: ({ focused }) => <WaterfallTab focused={focused} />,
+          }}
+        />
+        <Tab.Screen
+          name="QuizIntroScreen"
+          component={QuizIntroScreen}
+          options={{
+            tabBarIcon: ({ focused }) => <QuziTab focused={focused} />,
+          }}
+        />
+        <Tab.Screen
+          name="ArticleScreen"
+          component={ArticleScreen}
+          options={{
+            tabBarIcon: ({ focused }) => <ArticleTab focused={focused} />,
+          }}
+        />
+      </Tab.Navigator>
+    </View>
   );
 };
 
