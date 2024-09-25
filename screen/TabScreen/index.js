@@ -1,3 +1,5 @@
 import WaterDropsScreen from './WaterDropsScreen';
+import QuizIntroScreen from './QuizIntroScreen';
+import ArticleScreen from './ArticleScreen';
 
-export {WaterDropsScreen};
+export {WaterDropsScreen, QuizIntroScreen, ArticleScreen};
