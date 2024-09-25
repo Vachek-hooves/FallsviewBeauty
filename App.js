@@ -9,6 +9,12 @@ import {
   WelcomeScreen,
 } from './screen/TabScreen';
 import {
+  WaterfallTab,
+  ArticleTab,
+  QuziTab,
+  MelodyTab
+} from './components/ui/tabIcons';
+import {
   FallsGameLevelsScreen,
   WaterDropsPlayGameScreen,
 } from './screen/StackScreen';
@@ -19,9 +25,9 @@ const Tab = createBottomTabNavigator();
 const TabMenu = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen name="WaterDropsScreen" component={WaterDropsScreen} />
-      <Tab.Screen name="QuizIntroScreen" component={QuizIntroScreen} />
-      <Tab.Screen name="ArticleScreen" component={ArticleScreen} />
+      <Tab.Screen name="WaterDropsScreen" component={WaterDropsScreen} options={{tabBarIcon: () => <WaterfallTab />}}/>
+      <Tab.Screen name="QuizIntroScreen" component={QuizIntroScreen} options={{tabBarIcon: () => <QuziTab />}}/>
+      <Tab.Screen name="ArticleScreen" component={ArticleScreen} options={{tabBarIcon: () => <ArticleTab />}}/>
     </Tab.Navigator>
   );
 };
