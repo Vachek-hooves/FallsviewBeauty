@@ -1,12 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {QuizLayout} from '../../components/layout';
 
 const QuizLevelsGrid = () => {
-  return (
-    <View>
-      <Text>QuizLevelsGrid</Text>
-    </View>
-  );
+  return <QuizLayout></QuizLayout>;
 };
 
 export default QuizLevelsGrid;

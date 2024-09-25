@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TabLayout } from '../../components/layout';
+import {TabLayout} from '../../components/layout';
+import {BlurView} from '@react-native-community/blur';
+import {Color} from '../../constant/color';
 
 const WaterDropsScreen = ({navigation}) => {
   const [userData, setUserData] = useState(null);
@@ -16,9 +18,8 @@ const WaterDropsScreen = ({navigation}) => {
       const name = await AsyncStorage.getItem('userName');
       const image = await AsyncStorage.getItem('userImage');
       if (name && image) {
-        setUserData({ name, image });
+        setUserData({name, image});
         setShowUserCard(true);
-        // setTimeout(() => setShowUserCard(false), 5000); // Hide card after 5 seconds
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -30,20 +31,39 @@ const WaterDropsScreen = ({navigation}) => {
       <View style={styles.container}>
         {showUserCard && userData && (
           <View style={styles.userCard}>
-            <Image source={{ uri: userData.image }} style={styles.userImage} />
+            <Image source={{uri: userData.image}} style={styles.userImage} />
             <Text style={styles.userName}>{userData.name}</Text>
           </View>
         )}
-        <View style={styles.textContainer}>
+        <BlurView style={styles.headerBlur} blurType="light" blurAmount={20}>
           <Text style={styles.welcomeText}>Welcome to Water Drops!</Text>
-          <Text style={styles.subText}>Collect drops and save the planet</Text>
+        </BlurView>
+        <View style={styles.cardsContainer}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('WaterDropsPlayGameScreen')}>
+            <BlurView style={styles.cardBlur} blurType="light" blurAmount={20}>
+              <Image
+                style={styles.cardIcon}
+                source={require('../../assets/icon/tabMenu/waterfallTab.png')}
+              />
+              <Text style={styles.cardTitle}>Play Drops</Text>
+              <Text style={styles.cardSubtitle}>Collect water drops</Text>
+            </BlurView>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('QuizLevelsGrid')}>
+            <BlurView style={styles.cardBlur} blurType="light" blurAmount={20}>
+              <Image
+                style={styles.cardIcon}
+                source={require('../../assets/icon/tabMenu/quizTab.png')}
+              />
+              <Text style={styles.cardTitle}>Play Quiz</Text>
+              <Text style={styles.cardSubtitle}>Test your knowledge</Text>
+            </BlurView>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('WaterDropsPlayGameScreen')}
-        >
-          <Text style={styles.buttonText}>Start Game</Text>
-        </TouchableOpacity>
       </View>
     </TabLayout>
   );
@@ -57,6 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    // backgroundColor: '#f0f8ff',
   },
   userCard: {
     position: 'absolute',
@@ -68,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -86,37 +107,63 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1565C0',
-  },
-  textContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 15,
-    padding: 20,
-    marginBottom: 30,
-    alignItems: 'center',
+    color: Color.blue,
   },
   welcomeText: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#1565C0',
-    marginBottom: 10,
+    color: Color.blue,
+    // marginBottom: 30,
     textAlign: 'center',
   },
-  subText: {
-    fontSize: 18,
+  cardsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  card: {
+    width: '48%',
+    height: 200,
+    borderRadius: 20,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  cardBlur: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  cardIcon: {
+    width: 90,
+    height: 100,
+    marginBottom: 10,
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Color.blue,
+    textAlign: 'center',
+  },
+  cardSubtitle: {
+    fontSize: 14,
     color: '#333',
     textAlign: 'center',
   },
-  button: {
-    backgroundColor: '#1565C0',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 25,
-    elevation: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+  headerBlur: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // padding: 20,
+    marginVertical: 20,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    borderRadius: 20,
   },
 });

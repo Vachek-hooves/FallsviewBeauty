@@ -18,6 +18,7 @@ import {
 } from './components/ui/tabIcons';
 import {
   FallsGameLevelsScreen,
+  QuizLevelsGrid,
   WaterDropsPlayGameScreen,
 } from './screen/StackScreen';
 import {View} from 'react-native';
@@ -117,6 +118,7 @@ function App() {
             name="WaterDropsPlayGameScreen"
             component={WaterDropsPlayGameScreen}
           />
+          <Stack.Screen name="QuizLevelsGrid" component={QuizLevelsGrid} />
         </Stack.Navigator>
       </NavigationContainer>
     </FallsProvider>
