@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#87CEEB', // Sky Blue
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 60,
+    height: 60,
   },
 });

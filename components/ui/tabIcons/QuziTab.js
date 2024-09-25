@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFA07A', // Light Salmon
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 60,
+    height: 60,
   },
 });

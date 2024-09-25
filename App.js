@@ -25,7 +25,7 @@ const Tab = createBottomTabNavigator();
 
 const TabMenu = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: '#F0F8FF' }}>
+    <View style={{flex: 1, backgroundColor: '#F0F8FF'}}>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -38,7 +38,7 @@ const TabMenu = () => {
             right: 20,
             elevation: 0,
             borderRadius: 15,
-            height: 60,
+            height: 80,
             shadowColor: '#000',
             shadowOffset: {
               width: 0,
@@ -46,34 +46,34 @@ const TabMenu = () => {
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.5,
+
           },
           tabBarItemStyle: {
             height: 60,
-            padding: 0,
+            paddingTop: 30,
             alignItems: 'center',
             justifyContent: 'center',
           },
-        }}
-      >
+        }}>
         <Tab.Screen
           name="WaterDropsScreen"
           component={WaterDropsScreen}
           options={{
-            tabBarIcon: ({ focused }) => <WaterfallTab focused={focused} />,
+            tabBarIcon: ({focused}) => <WaterfallTab focused={focused} />,
           }}
         />
         <Tab.Screen
           name="QuizIntroScreen"
           component={QuizIntroScreen}
           options={{
-            tabBarIcon: ({ focused }) => <QuziTab focused={focused} />,
+            tabBarIcon: ({focused}) => <QuziTab focused={focused} />,
           }}
         />
         <Tab.Screen
           name="ArticleScreen"
           component={ArticleScreen}
           options={{
-            tabBarIcon: ({ focused }) => <ArticleTab focused={focused} />,
+            tabBarIcon: ({focused}) => <ArticleTab focused={focused} />,
           }}
         />
       </Tab.Navigator>

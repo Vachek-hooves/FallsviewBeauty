@@ -1,7 +1,7 @@
 import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 
-const ArticleTab = ({ focused }) => {
+const ArticleTab = ({focused}) => {
   return (
     <View style={[styles.iconContainer, focused && styles.focusedContainer]}>
       <Image
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#98FB98', // Pale Green
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 60,
+    height: 60,
   },
 });
