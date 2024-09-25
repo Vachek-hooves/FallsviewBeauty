@@ -1,12 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {TabLayout} from '../../components/layout';
 
 const ArticleScreen = () => {
-  return (
-    <View>
-      <Text>ArticleScreen</Text>
-    </View>
-  );
+  return <TabLayout></TabLayout>;
 };
 
 export default ArticleScreen;
