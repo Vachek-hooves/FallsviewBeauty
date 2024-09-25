@@ -16,11 +16,12 @@ export default WaterfallTab;
 
 const styles = StyleSheet.create({
   iconContainer: {
-    width: 44,
-    height: 44,
+    // width: 44,
+    // height: 44,
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
+    padding:10
   },
   focusedContainer: {
     backgroundColor: '#87CEEB', // Sky Blue

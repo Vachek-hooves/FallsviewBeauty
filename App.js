@@ -19,6 +19,7 @@ import {
   WaterDropsPlayGameScreen,
 } from './screen/StackScreen';
 import {View} from 'react-native';
+import { BlurView } from "@react-native-community/blur";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,23 +31,36 @@ const TabMenu = () => {
         screenOptions={{
           headerShown: false,
           title: '',
+          tabBarBackground: () => (
+            <BlurView
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+              blurType="light"
+              blurAmount={10}
+              reducedTransparencyFallbackColor="white"
+            />
+          ),
           tabBarStyle: {
-            backgroundColor: 'white',
             position: 'absolute',
             bottom: 20,
             left: 20,
             right: 20,
-            elevation: 0,
+            elevation: 5,
             borderRadius: 15,
             height: 80,
             shadowColor: '#000',
             shadowOffset: {
               width: 0,
-              height: 10,
+              height: 0,
             },
             shadowOpacity: 0.25,
-            shadowRadius: 3.5,
-
+            shadowRadius: 10,
+            overflow: 'hidden', // This is important for the blur effect
           },
           tabBarItemStyle: {
             height: 60,

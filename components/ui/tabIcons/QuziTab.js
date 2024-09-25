@@ -1,7 +1,7 @@
-import { StyleSheet, View, Image } from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 
-const QuziTab = ({ focused }) => {
+const QuziTab = ({focused}) => {
   return (
     <View style={[styles.iconContainer, focused && styles.focusedContainer]}>
       <Image
@@ -16,11 +16,12 @@ export default QuziTab;
 
 const styles = StyleSheet.create({
   iconContainer: {
-    width: 44,
-    height: 44,
+    // width: 44,
+    // height: 44,
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 10,
   },
   focusedContainer: {
     backgroundColor: '#FFA07A', // Light Salmon
