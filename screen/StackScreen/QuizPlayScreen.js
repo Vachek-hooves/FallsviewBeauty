@@ -15,6 +15,7 @@ const QuizPlayScreen = ({ route, navigation }) => {
   const [showResult, setShowResult] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const bounceAnims = useRef([]).current;
@@ -95,6 +96,9 @@ const QuizPlayScreen = ({ route, navigation }) => {
       ]).start();
     }
     
+    // Mark the current question as answered
+    setAnsweredQuestions([...answeredQuestions, currentQuestionIndex]);
+    
     setTimeout(() => {
       if (currentQuestionIndex + 1 < currentQuiz.questions.length) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -112,11 +116,41 @@ const QuizPlayScreen = ({ route, navigation }) => {
     setShowResult(false);
     setSelectedAnswer(null);
     setIsAnswerCorrect(null);
+    setAnsweredQuestions([]);
     fadeAnim.setValue(0);
     bounceAnims.forEach((_, index) => {
       bounceAnims[index] = new Animated.Value(1);
       shakeAnims[index] = new Animated.Value(0);
     });
+  };
+
+  const renderProgressBar = () => {
+    if (!currentQuiz) return null;
+    const totalQuestions = currentQuiz.questions.length;
+    const sectionWidth = 100 / totalQuestions;
+
+    return (
+      <View style={styles.progressBarContainer}>
+        {currentQuiz.questions.map((_, index) => (
+          <View 
+            key={index} 
+            style={[
+              styles.progressSection,
+              { width: `${sectionWidth}%` }
+            ]}
+          >
+            <View 
+              style={[
+                styles.progressFill,
+                { 
+                  width: answeredQuestions.includes(index) ? '100%' : '0%'
+                }
+              ]}
+            />
+          </View>
+        ))}
+      </View>
+    );
   };
 
   if (!currentQuiz) return null;
@@ -149,14 +183,11 @@ const QuizPlayScreen = ({ route, navigation }) => {
           <Text style={styles.quizTitle}>{currentQuiz.name}</Text>
         </BlurView>
         
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: `${((currentQuestionIndex + 1) / currentQuiz.questions.length) * 100}%` }]} />
-          </View>
-          <Text style={styles.questionNumber}>
-            Question {currentQuestionIndex + 1}/{currentQuiz.questions.length}
-          </Text>
-        </View>
+        {renderProgressBar()}
+
+        <Text style={styles.questionNumber}>
+          Question {currentQuestionIndex + 1}/{currentQuiz.questions.length}
+        </Text>
 
         <Text style={styles.scoreText}>Score: {score}</Text>
         
@@ -233,19 +264,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   progressBarContainer: {
-    marginTop: 80,
-    marginBottom: 20,
-  },
-  progressBar: {
+    flexDirection: 'row',
     height: 10,
     backgroundColor: '#e0e0e0',
     borderRadius: 5,
+    overflow: 'hidden',
+    marginTop: 80,
     marginBottom: 10,
   },
-  progress: {
+  progressSection: {
+    height: '100%',
+    borderRightWidth: 1,
+    borderRightColor: '#fff',
+  },
+  progressFill: {
     height: '100%',
     backgroundColor: Color.blue,
-    borderRadius: 5,
   },
   questionNumber: {
     fontSize: 16,
