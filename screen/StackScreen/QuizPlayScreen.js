@@ -18,13 +18,17 @@ const QuizPlayScreen = ({ route, navigation }) => {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const bounceAnims = useRef([]).current;
+  const shakeAnims = useRef([]).current;
 
   useEffect(() => {
     const quiz = QuizData.find(q => q.id === quizId);
     setCurrentQuiz(quiz);
     if (quiz) {
-      bounceAnims.length = quiz.questions[0].options.length;
+      const optionsCount = quiz.questions[0].options.length;
+      bounceAnims.length = optionsCount;
+      shakeAnims.length = optionsCount;
       bounceAnims.fill(new Animated.Value(1));
+      shakeAnims.fill(new Animated.Value(0));
     }
   }, [quizId]);
 
@@ -37,9 +41,10 @@ const QuizPlayScreen = ({ route, navigation }) => {
         useNativeDriver: true,
       }).start();
 
-      // Reset bounce animations for new question
-      bounceAnims.forEach((anim, index) => {
+      // Reset animations for new question
+      bounceAnims.forEach((_, index) => {
         bounceAnims[index] = new Animated.Value(1);
+        shakeAnims[index] = new Animated.Value(0);
       });
     }
   }, [currentQuestionIndex, currentQuiz]);
@@ -53,20 +58,42 @@ const QuizPlayScreen = ({ route, navigation }) => {
     setIsAnswerCorrect(correct);
     if (correct) {
       setScore(score + 1);
+      Animated.sequence([
+        Animated.timing(bounceAnims[index], {
+          toValue: 0.8,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.spring(bounceAnims[index], {
+          toValue: 1,
+          friction: 4,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      Animated.sequence([
+        Animated.timing(shakeAnims[index], {
+          toValue: 10,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnims[index], {
+          toValue: -10,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnims[index], {
+          toValue: 10,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(shakeAnims[index], {
+          toValue: 0,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
-
-    Animated.sequence([
-      Animated.timing(bounceAnims[index], {
-        toValue: 0.8,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.spring(bounceAnims[index], {
-        toValue: 1,
-        friction: 4,
-        useNativeDriver: true,
-      }),
-    ]).start();
     
     setTimeout(() => {
       if (currentQuestionIndex + 1 < currentQuiz.questions.length) {
@@ -86,8 +113,9 @@ const QuizPlayScreen = ({ route, navigation }) => {
     setSelectedAnswer(null);
     setIsAnswerCorrect(null);
     fadeAnim.setValue(0);
-    bounceAnims.forEach((anim, index) => {
+    bounceAnims.forEach((_, index) => {
       bounceAnims[index] = new Animated.Value(1);
+      shakeAnims[index] = new Animated.Value(0);
     });
   };
 
@@ -95,7 +123,7 @@ const QuizPlayScreen = ({ route, navigation }) => {
 
   if (showResult) {
     return (
-      <QuizLayout>
+      <QuizLayout blur={30}>
         <ScrollView contentContainerStyle={styles.container}>
           <BlurView style={styles.resultCard} blurType="light" blurAmount={20}>
             <Text style={styles.resultText}>Quiz Completed!</Text>
@@ -115,7 +143,7 @@ const QuizPlayScreen = ({ route, navigation }) => {
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
   return (
-    <QuizLayout>
+    <QuizLayout blur={30}>
       <View style={styles.container}>
         <BlurView style={styles.headerBlur} blurType="dark" blurAmount={10}>
           <Text style={styles.quizTitle}>{currentQuiz.name}</Text>
@@ -144,7 +172,10 @@ const QuizPlayScreen = ({ route, navigation }) => {
                 styles.optionCardContainer,
                 { 
                   opacity: fadeAnim, 
-                  transform: [{ scale: bounceAnims[index] || new Animated.Value(1) }] 
+                  transform: [
+                    { scale: bounceAnims[index] || new Animated.Value(1) },
+                    { translateX: shakeAnims[index] || new Animated.Value(0) }
+                  ] 
                 }
               ]}
             >
