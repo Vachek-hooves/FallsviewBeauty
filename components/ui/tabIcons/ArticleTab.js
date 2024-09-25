@@ -6,6 +6,7 @@ const ArticleTab = ({focused}) => {
     <View style={[styles.iconContainer, focused && styles.focusedContainer]}>
       <Image
         source={require('../../../assets/icon/tabMenu/articleTab.png')}
+        // source={require('../../../assets/icon/tabMenu/melodyTab.png')}
         style={styles.icon}
       />
     </View>
