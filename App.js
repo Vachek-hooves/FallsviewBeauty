@@ -7,12 +7,14 @@ import {
   QuizIntroScreen,
   WaterDropsScreen,
   WelcomeScreen,
+  UserScreen,
 } from './screen/TabScreen';
 import {
   WaterfallTab,
   ArticleTab,
   QuziTab,
   MelodyTab,
+  LogIn,
 } from './components/ui/tabIcons';
 import {
   FallsGameLevelsScreen,
@@ -48,8 +50,8 @@ const TabMenu = () => {
           tabBarStyle: {
             position: 'absolute',
             bottom: 20,
-            left: 20,
-            right: 20,
+            left: 10,
+            right: 10,
             elevation: 5,
             borderRadius: 15,
             height: 80,
@@ -88,6 +90,13 @@ const TabMenu = () => {
           component={ArticleScreen}
           options={{
             tabBarIcon: ({focused}) => <ArticleTab focused={focused} />,
+          }}
+        />
+        <Tab.Screen
+          name="UserScreen"
+          component={UserScreen}
+          options={{
+            tabBarIcon: ({focused}) => <LogIn focused={focused} />,
           }}
         />
       </Tab.Navigator>
