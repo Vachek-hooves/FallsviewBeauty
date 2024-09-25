@@ -18,7 +18,7 @@ const WaterDropsPlayGameScreen = () => {
   const navigation = useNavigation(); // Initialize navigation
   const [drops, setDrops] = useState([]);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(20);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const WaterDropsPlayGameScreen = () => {
             <Text style={styles.score}>Score: {score}</Text>
             <Text style={styles.timer}>
               Time Left:{' '}
-              <Text style={{color: timeLeft <= 10 ? 'red' : 'white'}}>
+              <Text style={{color: timeLeft <= 5 ? 'red' : 'white'}}>
                 {timeLeft}
               </Text>
               s

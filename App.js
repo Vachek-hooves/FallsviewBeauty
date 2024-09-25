@@ -2,7 +2,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FallsProvider} from './store/context';
-import {WaterDropsScreen, WelcomeScreen} from './screen/TabScreen';
+import {
+  ArticleScreen,
+  QuizIntroScreen,
+  WaterDropsScreen,
+  WelcomeScreen,
+} from './screen/TabScreen';
 import {
   FallsGameLevelsScreen,
   WaterDropsPlayGameScreen,
@@ -15,6 +20,8 @@ const TabMenu = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="WaterDropsScreen" component={WaterDropsScreen} />
+      <Tab.Screen name="QuizIntroScreen" component={QuizIntroScreen} />
+      <Tab.Screen name="ArticleScreen" component={ArticleScreen} />
     </Tab.Navigator>
   );
 };
