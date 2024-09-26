@@ -4,13 +4,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TabLayout} from '../../components/layout';
 import {BlurView} from '@react-native-community/blur';
 import {Color} from '../../constant/color';
+import {useCustomContext} from '../../store/context';
 
 const WaterDropsScreen = ({navigation}) => {
+  const {quizData} = useCustomContext(); // Get quiz data from context
   const [userData, setUserData] = useState(null);
   const [showUserCard, setShowUserCard] = useState(false);
+  const [totalScore, setTotalScore] = useState(0);
 
   useEffect(() => {
     fetchUserData();
+    calculateTotalScore();
   }, []);
 
   const fetchUserData = async () => {
@@ -26,13 +30,21 @@ const WaterDropsScreen = ({navigation}) => {
     }
   };
 
+  const calculateTotalScore = () => {
+    const score = quizData.reduce((acc, quiz) => acc + (quiz.highScore || 0), 0);
+    setTotalScore(score);
+  };
+
   return (
     <TabLayout>
       <View style={styles.container}>
         {showUserCard && userData && (
           <View style={styles.userCard}>
             <Image source={{uri: userData.image}} style={styles.userImage} />
-            <Text style={styles.userName}>{userData.name}</Text>
+            <View style={styles.userInfo}>
+              <Text style={styles.userName}>{userData.name}</Text>
+              <Text style={styles.userScore}>Quiz Total Score: {totalScore}</Text>
+            </View>
           </View>
         )}
         <BlurView style={styles.headerBlur} blurType="light" blurAmount={20}>
@@ -77,7 +89,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    // backgroundColor: '#f0f8ff',
   },
   userCard: {
     position: 'absolute',
@@ -104,16 +115,22 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginRight: 10,
   },
+  userInfo: {
+    flex: 1,
+  },
   userName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Color.blue,
   },
+  userScore: {
+    fontSize: 14,
+    color: '#333',
+  },
   welcomeText: {
     fontSize: 32,
     fontWeight: 'bold',
     color: Color.blue,
-    // marginBottom: 30,
     textAlign: 'center',
   },
   cardsContainer: {
@@ -160,7 +177,6 @@ const styles = StyleSheet.create({
   headerBlur: {
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: 20,
     marginVertical: 20,
     paddingHorizontal: 5,
     paddingVertical: 10,
