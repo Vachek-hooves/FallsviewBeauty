@@ -10,11 +10,13 @@ const WaterDropsScreen = ({navigation}) => {
   const {quizData} = useCustomContext(); // Get quiz data from context
   const [userData, setUserData] = useState(null);
   const [showUserCard, setShowUserCard] = useState(false);
-  const [totalScore, setTotalScore] = useState(0);
+  const [quizTotalScore, setQuizTotalScore] = useState(0);
+  const [waterDropsTotalScore, setWaterDropsTotalScore] = useState(0);
 
   useEffect(() => {
     fetchUserData();
-    calculateTotalScore();
+    calculateQuizTotalScore();
+    fetchWaterDropsTotalScore();
   }, []);
 
   const fetchUserData = async () => {
@@ -30,9 +32,20 @@ const WaterDropsScreen = ({navigation}) => {
     }
   };
 
-  const calculateTotalScore = () => {
+  const calculateQuizTotalScore = () => {
     const score = quizData.reduce((acc, quiz) => acc + (quiz.highScore || 0), 0);
-    setTotalScore(score);
+    setQuizTotalScore(score);
+  };
+
+  const fetchWaterDropsTotalScore = async () => {
+    try {
+      const totalScore = await AsyncStorage.getItem('totalScore');
+      if (totalScore !== null) {
+        setWaterDropsTotalScore(parseInt(totalScore));
+      }
+    } catch (error) {
+      console.error('Error fetching Water Drops total score:', error);
+    }
   };
 
   return (
@@ -43,7 +56,9 @@ const WaterDropsScreen = ({navigation}) => {
             <Image source={{uri: userData.image}} style={styles.userImage} />
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{userData.name}</Text>
-              <Text style={styles.userScore}>Quiz Total Score: {totalScore}</Text>
+              <Text style={styles.userScore}>Quiz Total Score: {quizTotalScore}</Text>
+              <Text style={styles.userScore}>Water Drops Total Score: {waterDropsTotalScore}</Text>
+              <Text style={styles.userScore}>Overall Total Score: {quizTotalScore + waterDropsTotalScore}</Text>
             </View>
           </View>
         )}
