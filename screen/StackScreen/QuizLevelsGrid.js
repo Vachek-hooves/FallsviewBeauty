@@ -8,24 +8,24 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import { QuizLayout } from '../../components/layout';
-import { BlurView } from '@react-native-community/blur';
-import { Color } from '../../constant/color';
-import { useCustomContext } from '../../store/context';
+import {QuizLayout} from '../../components/layout';
+import {BlurView} from '@react-native-community/blur';
+import {Color} from '../../constant/color';
+import {useCustomContext} from '../../store/context';
+import {ReturnIcon} from '../../components/ui/icons';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
 const CARD_HEIGHT = 120;
 
-const QuizLevelsGrid = ({ navigation }) => {
-  const { quizData } = useCustomContext();
+const QuizLevelsGrid = ({navigation}) => {
+  const {quizData} = useCustomContext();
 
-  const renderQuizCard = ({ item, index }) => (
+  const renderQuizCard = ({item, index}) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('QuizPlayScreen', { quizId: item.id })}
-      disabled={!item.isActive}
-    >
+      onPress={() => navigation.navigate('QuizPlayScreen', {quizId: item.id})}
+      disabled={!item.isActive}>
       <BlurView style={styles.cardBlur} blurType="light" blurAmount={10}>
         <View style={styles.cardContent}>
           <View style={styles.cardTextContainer}>
@@ -58,11 +58,13 @@ const QuizLevelsGrid = ({ navigation }) => {
         <FlatList
           data={quizData}
           renderItem={renderQuizCard}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContainer}
         />
+        <View style={{height:50}}></View>
       </View>
+      <ReturnIcon />
     </QuizLayout>
   );
 };
@@ -117,6 +119,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Color.blue,
     marginBottom: 5,
+    // textAlign: 'center',
   },
   cardSubtitle: {
     fontSize: 14,
