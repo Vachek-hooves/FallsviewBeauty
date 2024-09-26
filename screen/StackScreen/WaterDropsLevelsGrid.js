@@ -7,8 +7,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {WaterGameLayout} from '../../components/layout';
 import { ReturnIcon } from '../../components/ui/icons';
 
-const WaterDropsLevelsGrid = ({navigation, route}) => {
-  const [levels, setLevels] = useState(WaterDropsGame);
+const WaterDropsLevelsGrid = ({navigation}) => {
+  const [levels, setLevels] = useState([]);
 
   const loadLevelsData = useCallback(async () => {
     try {
@@ -16,7 +16,6 @@ const WaterDropsLevelsGrid = ({navigation, route}) => {
       if (savedLevels !== null) {
         setLevels(JSON.parse(savedLevels));
       } else {
-        // If no saved levels, initialize with WaterDropsGame
         await AsyncStorage.setItem(
           'waterDropsLevels',
           JSON.stringify(WaterDropsGame),
@@ -47,6 +46,7 @@ const WaterDropsLevelsGrid = ({navigation, route}) => {
       disabled={!item.unlocked}>
       <Text style={styles.levelText}>Level {item.level}</Text>
       <Text style={styles.scoreText}>High Score: {item.highScore}</Text>
+      <Text style={styles.speedText}>Speed: {item.speed.toFixed(1)}</Text>
     </TouchableOpacity>
   );
 
@@ -104,6 +104,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginTop: 10,
+  },
+  speedText: {
+    fontSize: 14,
+    color: 'white',
+    marginTop: 5,
   },
 });
 

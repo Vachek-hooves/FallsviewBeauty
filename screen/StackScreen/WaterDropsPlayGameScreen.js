@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlayGameLayou, WaterGameLayout } from '../../components/layout';
 import { ReturnIcon } from '../../components/ui/icons';
 import { WaterDropsGame } from '../../data/waterDropsData';
+import { createNextLevel } from '../../data/waterDropsData';
 
 const { width, height } = Dimensions.get('window');
 
@@ -115,18 +116,26 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
     try {
       const savedLevels = await AsyncStorage.getItem('waterDropsLevels');
       let levels = savedLevels ? JSON.parse(savedLevels) : WaterDropsGame;
-      const updatedLevels = levels.map(l => {
-        if (l.id === level.id) {
-          return {
-            ...l,
-            highScore: Math.max(l.highScore, score),
-            unlocked: true
-          };
-        } else if (l.id === level.id + 1) {
-          return { ...l, unlocked: true };
+      
+      const currentLevelIndex = levels.findIndex(l => l.id === level.id);
+      const updatedLevels = [...levels];
+      
+      // Update current level
+      updatedLevels[currentLevelIndex] = {
+        ...updatedLevels[currentLevelIndex],
+        highScore: Math.max(updatedLevels[currentLevelIndex].highScore, score),
+      };
+
+      // If score is 100 or more, create and unlock next level
+      if (score >= 100) {
+        if (currentLevelIndex === levels.length - 1) {
+          const nextLevel = createNextLevel(level);
+          updatedLevels.push(nextLevel);
+        } else {
+          updatedLevels[currentLevelIndex + 1].unlocked = true;
         }
-        return l;
-      });
+      }
+
       await AsyncStorage.setItem('waterDropsLevels', JSON.stringify(updatedLevels));
       
       // Update total score
