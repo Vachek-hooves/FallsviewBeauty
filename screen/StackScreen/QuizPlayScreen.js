@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,15 +8,16 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
-import {QuizLayout} from '../../components/layout';
-import {BlurView} from '@react-native-community/blur';
-import {QuizData} from '../../data/quizData';
-import {Color} from '../../constant/color';
+import { QuizLayout } from '../../components/layout';
+import { BlurView } from '@react-native-community/blur';
+import { Color } from '../../constant/color';
+import { useCustomContext } from '../../store/context';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const QuizPlayScreen = ({route, navigation}) => {
-  const {quizId} = route.params;
+const QuizPlayScreen = ({ route, navigation }) => {
+  const { quizId } = route.params;
+  const { quizData, updateQuizProgress } = useCustomContext();
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -30,7 +31,7 @@ const QuizPlayScreen = ({route, navigation}) => {
   const shakeAnims = useRef([]).current;
 
   useEffect(() => {
-    const quiz = QuizData.find(q => q.id === quizId);
+    const quiz = quizData.find(q => q.id === quizId);
     setCurrentQuiz(quiz);
     if (quiz) {
       const optionsCount = quiz.questions[0].options.length;
@@ -39,7 +40,7 @@ const QuizPlayScreen = ({route, navigation}) => {
       bounceAnims.fill(new Animated.Value(1));
       shakeAnims.fill(new Animated.Value(0));
     }
-  }, [quizId]);
+  }, [quizId, quizData]);
 
   useEffect(() => {
     if (currentQuiz) {
@@ -113,6 +114,7 @@ const QuizPlayScreen = ({route, navigation}) => {
         setSelectedAnswer(null);
         setIsAnswerCorrect(null);
       } else {
+        updateQuizProgress(quizId, score);
         setShowResult(true);
       }
     }, 1500);
@@ -199,7 +201,7 @@ const QuizPlayScreen = ({route, navigation}) => {
 
         <Text style={styles.scoreText}>Score: {score}</Text>
 
-        <BlurView style={styles.questionCard} blurType="dark" blurAmount={20}>
+        <BlurView style={styles.questionCard} blurType="light" blurAmount={20}>
           <Text style={styles.questionText}>{currentQuestion.question}</Text>
         </BlurView>
 

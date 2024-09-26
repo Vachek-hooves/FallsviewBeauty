@@ -7,23 +7,25 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import {QuizLayout} from '../../components/layout';
-import {BlurView} from '@react-native-community/blur';
-import {QuizData} from '../../data/quizData';
-import {Color} from '../../constant/color';
+import { QuizLayout } from '../../components/layout';
+import { BlurView } from '@react-native-community/blur';
+import { Color } from '../../constant/color';
+import { useCustomContext } from '../../store/context';
 
-const QuizLevelsGrid = ({navigation}) => {
+const QuizLevelsGrid = ({ navigation }) => {
+  const { quizData } = useCustomContext();
+
   return (
     <QuizLayout>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.headerText}>Quiz Levels</Text>
         <View style={styles.cardsContainer}>
-          {QuizData.map((quiz, index) => (
+          {quizData.map((quiz, index) => (
             <TouchableOpacity
               key={quiz.id}
               style={styles.card}
               onPress={() =>
-                navigation.navigate('QuizPlayScreen', {quizId: quiz.id})
+                navigation.navigate('QuizPlayScreen', { quizId: quiz.id })
               }
               disabled={!quiz.isActive}>
               <BlurView
@@ -32,6 +34,9 @@ const QuizLevelsGrid = ({navigation}) => {
                 blurAmount={20}>
                 <Text style={styles.cardTitle}>{quiz.name}</Text>
                 <Text style={styles.cardSubtitle}>{`Level ${index + 1}`}</Text>
+                {quiz.highScore !== undefined && (
+                  <Text style={styles.highScore}>High Score: {quiz.highScore}</Text>
+                )}
                 {!quiz.isActive && (
                   <View style={styles.lockedOverlay}>
                     <Image
@@ -115,5 +120,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  highScore: {
+    fontSize: 12,
+    color: Color.blue,
+    textAlign: 'center',
+    marginTop: 5,
   },
 });
