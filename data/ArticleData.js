@@ -26,7 +26,7 @@ In summary, waterfalls are the result of interactions between natural forces and
     author: "Geological Society",
     date: "2023-04-15",
     tags: ["geology", "waterfalls", "erosion", "climate", "ecosystems"],
-    imageUrl: "https://example.com/images/waterfall-geology.jpg"
+    imageUrl: "https://wtop.com/wp-content/uploads/2019/04/GettyImages-892494008-1880x1254.jpg"
   },
   {
     id: 2,
@@ -57,7 +57,7 @@ Each of these waterfalls has its own unique story and ecosystem, making them imp
     author: "Travel Enthusiast",
     date: "2023-05-20",
     tags: ["waterfalls", "travel", "nature", "geography", "tourism"],
-    imageUrl: "https://example.com/images/top-10-waterfalls.jpg"
+    imageUrl: "https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2014/11/plitvice-waterfalls-croatia.jpg?ssl=1"
   },
   {
     id: 3,
@@ -79,7 +79,7 @@ Studying the ecosystems around waterfalls helps scientists understand how these 
     author: "Ecologist",
     date: "2023-06-10",
     tags: ["ecosystems", "waterfalls", "biodiversity", "conservation", "climate change"],
-    imageUrl: "https://example.com/images/waterfall-ecosystem.jpg"
+    imageUrl: "https://images.squarespace-cdn.com/content/v1/6277bec02844771a1f51c010/1697313698301-F3UISDSZSXDDFFUD1SXU/image-asset.jpeg"
   },
   {
     id: 4,
@@ -101,7 +101,7 @@ Studying the cultural aspects of waterfalls helps us understand their role in sh
     author: "Cultural Anthropologist",
     date: "2023-07-05",
     tags: ["waterfalls", "culture", "art", "literature", "spirituality", "mythology"],
-    imageUrl: "https://example.com/images/waterfall-art-culture.jpg"
+    imageUrl: "https://www.artisoo.com/images/chinesepainting/cnag220563.jpg"
   },
   {
     id: 5,
@@ -122,7 +122,7 @@ These stories and beliefs underscore the deep connection between people and natu
     author: "Folklorist",
     date: "2023-08-20",
     tags: ["waterfalls", "myths", "legends", "culture", "folklore", "traditions"],
-    imageUrl: "https://example.com/images/waterfall-myths-legends.jpg"
+    imageUrl: "https://good-nature-blog-uploads.s3.amazonaws.com/uploads/2021/11/Haifoss-shutterstock_1626176152-1024x640.jpg"
   },
   {
     id: 6,
@@ -152,7 +152,7 @@ By combining these techniques, you can effectively capture the beauty and dynami
     author: "Professional Photographer",
     date: "2023-09-15",
     tags: ["photography", "waterfalls", "techniques", "composition", "lighting"],
-    imageUrl: "https://example.com/images/waterfall-photography.jpg"
+    imageUrl: "https://i.ytimg.com/vi/fFXx9rD-JxM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUlrWxjKAGuiEA0Pl4QUSDNd0n2Q"
   },
   {
     id: 7,
@@ -175,6 +175,6 @@ In summary, while the concept of waterfalls on other planets and moons may seem 
     author: "Planetary Scientist",
     date: "2023-10-05",
     tags: ["space", "waterfalls", "astrobiology", "planets", "moons", "extraterrestrial"],
-    imageUrl: "https://example.com/images/extraterrestrial-waterfalls.jpg"
+    imageUrl: "https://t4.ftcdn.net/jpg/07/44/07/53/360_F_744075393_VP792Y5PetmCcrreGonR8d90wPixjuOi.jpg"
   }
 ]
