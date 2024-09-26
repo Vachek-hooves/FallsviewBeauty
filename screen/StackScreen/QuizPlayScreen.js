@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get('window');
 
 const QuizPlayScreen = ({ route, navigation }) => {
   const { quizId } = route.params;
-  const { quizData, updateQuizProgress } = useCustomContext();
+  const { quizData, updateQuizProgress, unlockNextLevel } = useCustomContext();
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -114,7 +114,7 @@ const QuizPlayScreen = ({ route, navigation }) => {
         setSelectedAnswer(null);
         setIsAnswerCorrect(null);
       } else {
-        updateQuizProgress(quizId, score);
+        updateQuizProgress(quizId, score + (correct ? 1 : 0));
         setShowResult(true);
       }
     }, 1500);
@@ -132,6 +132,11 @@ const QuizPlayScreen = ({ route, navigation }) => {
       bounceAnims[index] = new Animated.Value(1);
       shakeAnims[index] = new Animated.Value(0);
     });
+  };
+
+  const handleUnlockNextLevel = () => {
+    unlockNextLevel(quizId);
+    navigation.navigate('QuizLevelsGrid');
   };
 
   const renderProgressBar = () => {
@@ -178,6 +183,11 @@ const QuizPlayScreen = ({ route, navigation }) => {
               onPress={() => navigation.goBack()}>
               <Text style={styles.buttonText}>Back to Levels</Text>
             </TouchableOpacity>
+            {score >= 9 && quizData[quizData.findIndex(q => q.id === quizId) + 1]?.isActive === false && (
+              <TouchableOpacity style={styles.button} onPress={handleUnlockNextLevel}>
+                <Text style={styles.buttonText}>Unlock Next Level</Text>
+              </TouchableOpacity>
+            )}
           </BlurView>
         </ScrollView>
       </QuizLayout>

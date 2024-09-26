@@ -39,9 +39,19 @@ export const FallsProvider = ({ children }) => {
     saveQuizData(updatedQuizData);
   };
 
+  const unlockNextLevel = (currentQuizId) => {
+    const currentIndex = quizData.findIndex(quiz => quiz.id === currentQuizId);
+    if (currentIndex < quizData.length - 1) {
+      const updatedQuizData = [...quizData];
+      updatedQuizData[currentIndex + 1].isActive = true;
+      saveQuizData(updatedQuizData);
+    }
+  };
+
   const value = {
     quizData,
     updateQuizProgress,
+    unlockNextLevel,
   };
 
   return (
