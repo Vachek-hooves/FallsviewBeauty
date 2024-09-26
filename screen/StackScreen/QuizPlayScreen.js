@@ -167,11 +167,9 @@ const QuizPlayScreen = ({route, navigation}) => {
   if (!currentQuiz) return null;
 
   if (showResult) {
-
     return (
-
       <QuizLayout blur={100}>
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.containerResults}>
           <BlurView style={styles.resultCard} blurType="light" blurAmount={20}>
             <Text style={styles.resultText}>Quiz Completed!</Text>
             <Text style={styles.scoreText}>
@@ -399,7 +397,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 20,
     // alignItems: 'center',
-   
+    height: '50%',
   },
   resultText: {
     fontSize: 24,
@@ -418,5 +416,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  containerResults: {
+    width: '100%',
+    flex: 1,
+    marginTop: height*0.2
   },
 });
