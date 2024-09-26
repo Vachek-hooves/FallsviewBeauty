@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -25,11 +25,23 @@ import {
   WaterDropsPlayGameScreen,
   WaterfallDetails,
 } from './screen/StackScreen';
-import {View} from 'react-native';
+import {
+  AppState,
+  TouchableOpacity,
+  Vibration,
+  Dimensions,
+  Animated,
+  View,
+} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import QuizPlayScreen from './screen/StackScreen/QuizPlayScreen';
 import ArticlesListScreen from './screen/StackScreen/ArticlesListScreen';
 import EmotionalWaterfallsScreen from './screen/StackScreen/EmotionalWaterfallsScreen';
+import SoundControl from './components/appSound/SoundControl';
+import {
+  playBackgroundMusic,
+  resetPlayer,
+} from './components/appSound/setupPlayer';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,12 +119,51 @@ const TabMenu = () => {
             tabBarIcon: ({focused}) => <LogIn focused={focused} />,
           }}
         />
+        <Tab.Screen
+          name="Sound"
+          component={SoundControl}
+          options={{
+            tabBarIcon: ({focused}) => <SoundControl focused={focused} />,
+            tabBarButton: props => (
+              <TouchableOpacity {...props} onPress={() => {}} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </View>
   );
 };
 
 function App() {
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+
+  useEffect(() => {
+    const initializePlayer = async () => {
+      try {
+        await playBackgroundMusic();
+        setIsPlayerReady(true);
+      } catch (error) {
+        console.error('Error initializing player:', error);
+        setIsPlayerReady(true); // Set to true even if there's an error, so the app can render
+      }
+    };
+
+    initializePlayer();
+
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'background' || nextAppState === 'inactive') {
+        resetPlayer();
+      } else if (nextAppState === 'active') {
+        playBackgroundMusic();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+      resetPlayer();
+    };
+  }, []);
+
   return (
     <FallsProvider>
       <NavigationContainer>
