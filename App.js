@@ -20,6 +20,7 @@ import {
 import {
   FallsGameLevelsScreen,
   QuizLevelsGrid,
+  WaterDropsLevelsGrid,
   WaterDropsPlayGameScreen,
 } from './screen/StackScreen';
 import {View} from 'react-native';
@@ -122,6 +123,10 @@ function App() {
           />
           <Stack.Screen name="QuizLevelsGrid" component={QuizLevelsGrid} />
           <Stack.Screen name="QuizPlayScreen" component={QuizPlayScreen} />
+          <Stack.Screen
+            name="WaterDropsLevelsGrid"
+            component={WaterDropsLevelsGrid}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </FallsProvider>

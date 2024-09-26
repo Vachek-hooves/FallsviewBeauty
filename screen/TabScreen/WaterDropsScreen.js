@@ -5,6 +5,7 @@ import {TabLayout} from '../../components/layout';
 import {BlurView} from '@react-native-community/blur';
 import {Color} from '../../constant/color';
 import {useCustomContext} from '../../store/context';
+import { useFocusEffect } from '@react-navigation/native';
 
 const WaterDropsScreen = ({navigation}) => {
   const {quizData} = useCustomContext(); // Get quiz data from context
@@ -18,6 +19,14 @@ const WaterDropsScreen = ({navigation}) => {
     calculateQuizTotalScore();
     fetchWaterDropsTotalScore();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserData();
+      calculateQuizTotalScore();
+      fetchWaterDropsTotalScore();
+    }, [])
+  );
 
   const fetchUserData = async () => {
     try {
@@ -68,7 +77,7 @@ const WaterDropsScreen = ({navigation}) => {
         <View style={styles.cardsContainer}>
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate('WaterDropsPlayGameScreen')}>
+            onPress={() => navigation.navigate('WaterDropsLevelsGrid')}>
             <BlurView style={styles.cardBlur} blurType="light" blurAmount={20}>
               <Image
                 style={styles.cardIcon}
