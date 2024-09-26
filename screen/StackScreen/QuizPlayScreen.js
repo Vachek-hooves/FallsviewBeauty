@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,16 +8,16 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
-import { QuizLayout } from '../../components/layout';
-import { BlurView } from '@react-native-community/blur';
-import { Color } from '../../constant/color';
-import { useCustomContext } from '../../store/context';
+import {QuizLayout} from '../../components/layout';
+import {BlurView} from '@react-native-community/blur';
+import {Color} from '../../constant/color';
+import {useCustomContext} from '../../store/context';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const QuizPlayScreen = ({ route, navigation }) => {
-  const { quizId } = route.params;
-  const { quizData, updateQuizProgress, unlockNextLevel } = useCustomContext();
+const QuizPlayScreen = ({route, navigation}) => {
+  const {quizId} = route.params;
+  const {quizData, updateQuizProgress, unlockNextLevel} = useCustomContext();
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -167,7 +167,9 @@ const QuizPlayScreen = ({ route, navigation }) => {
   if (!currentQuiz) return null;
 
   if (showResult) {
+
     return (
+
       <QuizLayout blur={100}>
         <ScrollView contentContainerStyle={styles.container}>
           <BlurView style={styles.resultCard} blurType="light" blurAmount={20}>
@@ -183,11 +185,15 @@ const QuizPlayScreen = ({ route, navigation }) => {
               onPress={() => navigation.goBack()}>
               <Text style={styles.buttonText}>Back to Levels</Text>
             </TouchableOpacity>
-            {score >= 9 && quizData[quizData.findIndex(q => q.id === quizId) + 1]?.isActive === false && (
-              <TouchableOpacity style={styles.button} onPress={handleUnlockNextLevel}>
-                <Text style={styles.buttonText}>Unlock Next Level</Text>
-              </TouchableOpacity>
-            )}
+            {score >= 9 &&
+              quizData[quizData.findIndex(q => q.id === quizId) + 1]
+                ?.isActive === false && (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleUnlockNextLevel}>
+                  <Text style={styles.buttonText}>Unlock Next Level</Text>
+                </TouchableOpacity>
+              )}
           </BlurView>
         </ScrollView>
       </QuizLayout>
@@ -243,7 +249,16 @@ const QuizPlayScreen = ({ route, navigation }) => {
                   style={styles.optionBlur}
                   blurType="dark"
                   blurAmount={20}>
-                  <Text style={styles.optionText}>{option}</Text>
+                  <Text
+                    style={[
+                      styles.optionText,
+                      selectedAnswer === option &&
+                        (isAnswerCorrect
+                          ? styles.correctOptionText
+                          : styles.wrongOptionText),
+                    ]}>
+                    {option}
+                  </Text>
                 </BlurView>
               </TouchableOpacity>
             </Animated.View>
@@ -323,7 +338,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 20,
     padding: 10,
-    height: height * 0.15, // Fixed height
+    height: height * 0.18, // Fixed height
     justifyContent: 'center',
   },
   questionText: {
@@ -346,10 +361,15 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   optionText: {
-    fontSize: 18,
-    color: Color.blue,
-    textAlign: 'center',
+    fontSize: 22,
     color: Color.white,
+    textAlign: 'center',
+  },
+  correctOptionText: {
+    color: 'green',
+  },
+  wrongOptionText: {
+    color: 'red',
   },
   correctAnswer: {
     borderColor: 'green',
@@ -378,7 +398,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
     padding: 20,
-    alignItems: 'center',
+    // alignItems: 'center',
+   
   },
   resultText: {
     fontSize: 24,
@@ -388,14 +409,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Color.blue,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 20,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
