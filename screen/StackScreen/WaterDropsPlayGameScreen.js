@@ -42,7 +42,7 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
       const dropInterval = setInterval(() => {
         const newDrop = createDrop();
         setDrops(prev => [...prev, newDrop]);
-      }, 1000 - level.speed * 50);
+      }, 800 - level.speed * 50);
 
       return () => clearInterval(dropInterval);
     }
@@ -57,7 +57,7 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
               ...drop,
               y: drop.y + drop.speed,
             }))
-            .filter(drop => drop.y < height * 0.65),
+            .filter(drop => drop.y < height * 0.7),
         );
       }, 16);
 
@@ -81,7 +81,7 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
         x: Math.random() * (width * 0.9),
         y: 0,
         type: 'penalty',
-        speed: 4 + level.speed,
+        speed: 2 + level.speed,
       };
     } else {
       return {
@@ -173,30 +173,37 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
             </Text>
             <Text style={styles.level}>Level: {level.level}</Text>
           </View>
-          <ImageBackground
-            style={styles.gameField}
-            source={require('../../assets/img/bg/fallGame1.jpg')}>
-            {drops.map(drop => (
-              <TouchableOpacity
-                key={drop.id}
-                style={[styles.drop, {left: drop.x, top: drop.y}]}
-                onPress={() => handleCatch(drop.id, drop.type)}>
-                <Image
-                  source={
-                    drop.type === 'bonus'
-                      ? require('../../assets/img/gameImg/bonusDrop.png')
-                      : drop.type === 'penalty'
-                      ? require('../../assets/img/gameImg/penaltyDrop.png')
-                      : require('../../assets/img/gameImg/waterDrop.png')
-                  }
-                  style={{width: 35, height: 35}}
-                />
-              </TouchableOpacity>
-            ))}
-          </ImageBackground>
+          
+          <View style={styles.gameFieldContainer}>
+            <ImageBackground
+              opacity={0.01}
+              style={styles.gameFieldBackground}
+              source={require('../../assets/img/bg/fallGame1.jpg')}
+            />
+            <View style={styles.gameFieldOverlay} />
+            <View style={styles.dropsContainer}>
+              {drops.map(drop => (
+                <TouchableOpacity
+                  key={drop.id}
+                  style={[styles.drop, {left: drop.x, top: drop.y}]}
+                  onPress={() => handleCatch(drop.id, drop.type)}>
+                  <Image
+                    source={
+                      drop.type === 'bonus'
+                        ? require('../../assets/img/gameImg/bonusDrop.png')
+                        : drop.type === 'penalty'
+                        ? require('../../assets/img/gameImg/penaltyDrop.png')
+                        : require('../../assets/img/gameImg/waterDrop.png')
+                    }
+                    style={{width: 35, height: 35}}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          {/* <ReturnIcon /> */}
         </>
       )}
-      <ReturnIcon />
     </WaterGameLayout>
   );
 };
@@ -244,7 +251,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     borderRadius: 20,
-    opacity:0.5
+    opacity: 0.5,
   },
   drop: {
     width: 30,
@@ -265,5 +272,31 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  gameFieldContainer: {
+    width: width * 0.95,
+    height: height * 0.75,
+    // position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 20,
+  },
+  gameFieldBackground: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  gameFieldOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust the last value (0.5) to change the opacity
+  },
+  dropsContainer: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  drop: {
+    width: 35,
+    height: 35,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
