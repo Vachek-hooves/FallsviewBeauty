@@ -81,13 +81,13 @@ const TabMenu = () => {
             tabBarIcon: ({focused}) => <WaterfallTab focused={focused} />,
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="QuizIntroScreen"
           component={QuizIntroScreen}
           options={{
             tabBarIcon: ({focused}) => <QuziTab focused={focused} />,
           }}
-        />
+        /> */}
         <Tab.Screen
           name="ArticleScreen"
           component={ArticleScreen}
