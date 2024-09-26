@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   placeholderImage: {
     width: 150,
@@ -191,10 +191,11 @@ const styles = StyleSheet.create({
     borderColor: Color.blue,
   },
   name: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
     color: '#333',
+    letterSpacing: 2,
   },
   buttonContainer: {
     width: '100%',
