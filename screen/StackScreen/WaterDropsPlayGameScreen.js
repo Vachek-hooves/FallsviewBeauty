@@ -8,18 +8,18 @@ import {
   ImageBackground,
   Alert,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PlayGameLayou, WaterGameLayout } from '../../components/layout';
-import { ReturnIcon } from '../../components/ui/icons';
-import { WaterDropsGame } from '../../data/waterDropsData';
-import { createNextLevel } from '../../data/waterDropsData';
+import {PlayGameLayou, WaterGameLayout} from '../../components/layout';
+import {ReturnIcon} from '../../components/ui/icons';
+import {WaterDropsGame} from '../../data/waterDropsData';
+import {createNextLevel} from '../../data/waterDropsData';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const WaterDropsPlayGameScreen = ({ route, navigation }) => {
-  const { level } = route.params;
+const WaterDropsPlayGameScreen = ({route, navigation}) => {
+  const {level} = route.params;
   const [drops, setDrops] = useState([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(20);
@@ -42,7 +42,7 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
       const dropInterval = setInterval(() => {
         const newDrop = createDrop();
         setDrops(prev => [...prev, newDrop]);
-      }, 1000 - (level.speed * 50));
+      }, 1000 - level.speed * 50);
 
       return () => clearInterval(dropInterval);
     }
@@ -116,10 +116,10 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
     try {
       const savedLevels = await AsyncStorage.getItem('waterDropsLevels');
       let levels = savedLevels ? JSON.parse(savedLevels) : WaterDropsGame;
-      
+
       const currentLevelIndex = levels.findIndex(l => l.id === level.id);
       const updatedLevels = [...levels];
-      
+
       // Update current level
       updatedLevels[currentLevelIndex] = {
         ...updatedLevels[currentLevelIndex],
@@ -136,8 +136,11 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
         }
       }
 
-      await AsyncStorage.setItem('waterDropsLevels', JSON.stringify(updatedLevels));
-      
+      await AsyncStorage.setItem(
+        'waterDropsLevels',
+        JSON.stringify(updatedLevels),
+      );
+
       // Update total score
       const currentTotalScore = await AsyncStorage.getItem('totalScore');
       const newTotalScore = (parseInt(currentTotalScore) || 0) + score;
@@ -146,7 +149,7 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
       console.error('Error saving level data:', error);
     }
     setTimeout(() => {
-      navigation.navigate('WaterDropsLevelsGrid', { refresh: true });
+      navigation.navigate('WaterDropsLevelsGrid', {refresh: true});
     }, 3000);
   };
 
@@ -162,11 +165,17 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
           <View style={styles.scoreContainer}>
             <Text style={styles.score}>Score: {score}</Text>
             <Text style={styles.timer}>
-              Time Left: <Text style={{color: timeLeft <= 5 ? 'red' : 'white'}}>{timeLeft}</Text>s
+              Time Left:{' '}
+              <Text style={{color: timeLeft <= 5 ? 'red' : 'white'}}>
+                {timeLeft}
+              </Text>
+              s
             </Text>
             <Text style={styles.level}>Level: {level.level}</Text>
           </View>
-          <View style={styles.gameField}>
+          <ImageBackground
+            style={styles.gameField}
+            source={require('../../assets/img/bg/fallGame1.jpg')}>
             {drops.map(drop => (
               <TouchableOpacity
                 key={drop.id}
@@ -184,10 +193,10 @@ const WaterDropsPlayGameScreen = ({ route, navigation }) => {
                 />
               </TouchableOpacity>
             ))}
-          </View>
-          <ReturnIcon />
+          </ImageBackground>
         </>
       )}
+      <ReturnIcon />
     </WaterGameLayout>
   );
 };
@@ -235,6 +244,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     borderRadius: 20,
+    opacity:0.5
   },
   drop: {
     width: 30,
