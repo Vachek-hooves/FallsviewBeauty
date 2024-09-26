@@ -6,15 +6,17 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  Platform,
+  FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {TabLayout} from '../../components/layout';
 import {BlurView} from '@react-native-community/blur';
 import {Color} from '../../constant/color';
+import {useCustomContext} from '../../store/context';
 
 const UserScreen = () => {
+  const {quizData} = useCustomContext(); // Get quiz data from context
   const [name, setName] = useState('');
   const [image, setImage] = useState(null);
   const [hasUserData, setHasUserData] = useState(false);
@@ -79,6 +81,24 @@ const UserScreen = () => {
     </View>
   );
 
+  const renderProgressTable = () => {
+    return (
+      <View style={styles.tableContainer}>
+        <Text style={styles.tableHeader}>User Progress</Text>
+        <FlatList
+          data={quizData}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => (
+            <View style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.name}</Text>
+              <Text style={styles.tableCell}>{item.highScore || 0}</Text>
+            </View>
+          )}
+        />
+      </View>
+    );
+  };
+
   if (!hasUserData) {
     return (
       <TabLayout>
@@ -121,6 +141,7 @@ const UserScreen = () => {
             <Text style={styles.buttonText}>Edit Profile</Text>
           </TouchableOpacity>
         </BlurredView>
+        {renderProgressTable()}
       </View>
     </TabLayout>
   );
@@ -133,7 +154,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
-    // backgroundColor: '#f0f0f0',
   },
   imageContainer: {
     marginBottom: 20,
@@ -189,5 +209,32 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  tableContainer: {
+    width: '100%',
+    marginTop: 20,
+    borderRadius: 10,
+    // backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: Color.blue + 90,
+    padding: 10,
+  },
+  tableHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    // color: Color.blue,
+    textAlign: 'center',
+    marginBottom: 10,
+    color: Color.white,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  tableCell: {
+    fontSize: 18,
+    color: '#fff',
   },
 });
