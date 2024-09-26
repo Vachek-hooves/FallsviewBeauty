@@ -18,14 +18,18 @@ import {
   LogIn,
 } from './components/ui/tabIcons';
 import {
+  ArticleDetail,
   FallsGameLevelsScreen,
   QuizLevelsGrid,
   WaterDropsLevelsGrid,
   WaterDropsPlayGameScreen,
+  WaterfallDetails,
 } from './screen/StackScreen';
 import {View} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import QuizPlayScreen from './screen/StackScreen/QuizPlayScreen';
+import ArticlesListScreen from './screen/StackScreen/ArticlesListScreen';
+import EmotionalWaterfallsScreen from './screen/StackScreen/EmotionalWaterfallsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -127,6 +131,16 @@ function App() {
             name="WaterDropsLevelsGrid"
             component={WaterDropsLevelsGrid}
           />
+          <Stack.Screen
+            name="ArticlesListScreen"
+            component={ArticlesListScreen}
+          />
+          <Stack.Screen
+            name="EmotionalWaterfallsScreen"
+            component={EmotionalWaterfallsScreen}
+          />
+          <Stack.Screen name="ArticleDetail" component={ArticleDetail} />
+          <Stack.Screen name="WaterfallDetail" component={WaterfallDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </FallsProvider>
