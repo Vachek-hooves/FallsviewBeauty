@@ -67,7 +67,7 @@ const WaterDropsScreen = ({navigation}) => {
               <Text style={styles.userName}>{userData.name}</Text>
               <Text style={styles.userScore}>Quiz Total Score: {quizTotalScore}</Text>
               <Text style={styles.userScore}>Water Drops Total Score: {waterDropsTotalScore}</Text>
-              <Text style={styles.userScore}>Overall Total Score: {quizTotalScore + waterDropsTotalScore}</Text>
+              {/* <Text style={styles.userScore}>Overall Total Score: {quizTotalScore + waterDropsTotalScore}</Text> */}
             </View>
           </View>
         )}
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   userImage: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     borderRadius: 25,
     marginRight: 10,
   },

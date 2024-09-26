@@ -60,7 +60,9 @@ const WaterDropsLevelsGrid = ({navigation}) => {
           keyExtractor={item => item.id.toString()}
           numColumns={2}
           contentContainerStyle={styles.gridContainer}
+          showsVerticalScrollIndicator={false}
         />
+        <View style={{height:55}}></View>
       </View>
       <ReturnIcon/>
     </WaterGameLayout>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: '#f0f0f0',
-    padding: 20,
+    // padding: 10,
   },
   title: {
     fontSize: 24,
