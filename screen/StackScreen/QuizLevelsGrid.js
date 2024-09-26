@@ -4,56 +4,65 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
   Image,
+  Dimensions,
 } from 'react-native';
 import { QuizLayout } from '../../components/layout';
 import { BlurView } from '@react-native-community/blur';
 import { Color } from '../../constant/color';
 import { useCustomContext } from '../../store/context';
 
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width * 0.9;
+const CARD_HEIGHT = 120;
+
 const QuizLevelsGrid = ({ navigation }) => {
   const { quizData } = useCustomContext();
 
+  const renderQuizCard = ({ item, index }) => (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => navigation.navigate('QuizPlayScreen', { quizId: item.id })}
+      disabled={!item.isActive}
+    >
+      <BlurView style={styles.cardBlur} blurType="light" blurAmount={10}>
+        <View style={styles.cardContent}>
+          <View style={styles.cardTextContainer}>
+            <Text style={styles.cardTitle}>{item.name}</Text>
+            <Text style={styles.cardSubtitle}>{`Level ${index + 1}`}</Text>
+          </View>
+          {item.highScore !== undefined && (
+            <View style={styles.highScoreContainer}>
+              <Text style={styles.highScoreText}>High Score</Text>
+              <Text style={styles.highScoreValue}>{item.highScore}</Text>
+            </View>
+          )}
+          {!item.isActive && (
+            <View style={styles.lockedOverlay}>
+              <Image
+                source={require('../../assets/icon/ui/lock.png')}
+                style={styles.lockIcon}
+              />
+            </View>
+          )}
+        </View>
+      </BlurView>
+    </TouchableOpacity>
+  );
+
   return (
     <QuizLayout>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
         <Text style={styles.headerText}>Quiz Levels</Text>
-        <View style={styles.cardsContainer}>
-          {quizData.map((quiz, index) => (
-            <TouchableOpacity
-              key={quiz.id}
-              style={styles.card}
-              onPress={() =>
-                navigation.navigate('QuizPlayScreen', { quizId: quiz.id })
-              }
-              disabled={!quiz.isActive}>
-              <BlurView
-                style={styles.cardBlur}
-                blurType="light"
-                blurAmount={20}>
-                <Text style={styles.cardTitle}>{quiz.name}</Text>
-                <Text style={styles.cardSubtitle}>{`Level ${index + 1}`}</Text>
-                {quiz.highScore !== undefined && (
-                  <Text style={styles.highScore}>High Score: {quiz.highScore}</Text>
-                )}
-                {!quiz.isActive && (
-                  <View style={styles.lockedOverlay}>
-                    <Image
-                      source={require('../../assets/icon/ui/lock.png')}
-                      style={{
-                        width: 50,
-                        height: 50,
-                        tintColor: Color.white + 90,
-                      }}
-                    />
-                  </View>
-                )}
-              </BlurView>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+        <FlatList
+          data={quizData}
+          renderItem={renderQuizCard}
+          keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContainer}
+        />
+      </View>
     </QuizLayout>
   );
 };
@@ -61,8 +70,8 @@ const QuizLevelsGrid = ({ navigation }) => {
 export default QuizLevelsGrid;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
+  container: {
+    flex: 1,
     padding: 20,
   },
   headerText: {
@@ -72,17 +81,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  cardsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  listContainer: {
+    paddingBottom: 20,
   },
   card: {
-    width: '48%',
-    height: 150,
-    borderRadius: 20,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
+    borderRadius: 15,
     overflow: 'hidden',
-    marginBottom: 20,
+    marginBottom: 15,
+    alignSelf: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -94,21 +102,42 @@ const styles = StyleSheet.create({
   },
   cardBlur: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  cardContent: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
+  },
+  cardTextContainer: {
+    flex: 1,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: Color.blue,
-    textAlign: 'center',
     marginBottom: 5,
   },
   cardSubtitle: {
     fontSize: 14,
     color: '#333',
-    textAlign: 'center',
+  },
+  highScoreContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 10,
+    padding: 8,
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  highScoreText: {
+    fontSize: 12,
+    color: Color.blue,
+    fontWeight: 'bold',
+  },
+  highScoreValue: {
+    fontSize: 18,
+    color: Color.blue,
+    fontWeight: 'bold',
   },
   lockedOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -116,15 +145,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  lockedText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  highScore: {
-    fontSize: 12,
-    color: Color.blue,
-    textAlign: 'center',
-    marginTop: 5,
+  lockIcon: {
+    width: 40,
+    height: 40,
+    tintColor: 'rgba(255, 255, 255, 0.9)',
   },
 });
