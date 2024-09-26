@@ -5,6 +5,7 @@ import {WaterDropsGame} from '../../data/waterDropsData';
 import {Color} from '../../constant/color';
 import {useFocusEffect} from '@react-navigation/native';
 import {WaterGameLayout} from '../../components/layout';
+import { ReturnIcon } from '../../components/ui/icons';
 
 const WaterDropsLevelsGrid = ({navigation, route}) => {
   const [levels, setLevels] = useState(WaterDropsGame);
@@ -61,6 +62,7 @@ const WaterDropsLevelsGrid = ({navigation, route}) => {
           contentContainerStyle={styles.gridContainer}
         />
       </View>
+      <ReturnIcon/>
     </WaterGameLayout>
   );
 };
