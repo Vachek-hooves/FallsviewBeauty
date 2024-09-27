@@ -1,4 +1,4 @@
-workflow:
+workflows:
   fallsview-beauty-workflow:
     name: Fallsview Beauty
     max_build_duration: 120
