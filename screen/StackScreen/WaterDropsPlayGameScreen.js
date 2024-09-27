@@ -15,6 +15,7 @@ import {PlayGameLayou, WaterGameLayout} from '../../components/layout';
 import {ReturnIcon} from '../../components/ui/icons';
 import {WaterDropsGame} from '../../data/waterDropsData';
 import {createNextLevel} from '../../data/waterDropsData';
+import { useCustomContext } from '../../store/context';
 
 const {width, height} = Dimensions.get('window');
 
@@ -24,6 +25,7 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(20);
   const [gameOver, setGameOver] = useState(false);
+  const { updateWaterDropsTotalScore, checkAndUnlockQuizLevels } = useCustomContext();
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -144,7 +146,10 @@ const WaterDropsPlayGameScreen = ({route, navigation}) => {
       // Update total score
       const currentTotalScore = await AsyncStorage.getItem('totalScore');
       const newTotalScore = (parseInt(currentTotalScore) || 0) + score;
-      await AsyncStorage.setItem('totalScore', newTotalScore.toString());
+      await updateWaterDropsTotalScore(newTotalScore);
+
+      // Check and unlock quiz levels based on the new total score
+      checkAndUnlockQuizLevels();
     } catch (error) {
       console.error('Error saving level data:', error);
     }

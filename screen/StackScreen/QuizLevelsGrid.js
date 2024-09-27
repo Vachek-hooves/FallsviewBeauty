@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {QuizLayout} from '../../components/layout';
 import {BlurView} from '@react-native-community/blur';
@@ -19,12 +20,30 @@ const CARD_WIDTH = width * 0.9;
 const CARD_HEIGHT = 120;
 
 const QuizLevelsGrid = ({navigation}) => {
-  const {quizData} = useCustomContext();
+  const {quizData, waterDropsTotalScore, checkAndUnlockQuizLevels, updateWaterDropsTotalScore} = useCustomContext();
+
+  const handleUnlock = (quizId, index) => {
+    if (waterDropsTotalScore >= 400) {
+      checkAndUnlockQuizLevels();
+      updateWaterDropsTotalScore(waterDropsTotalScore - 400);
+      Alert.alert(
+        "Quiz Level Unlocked",
+        "You've successfully unlocked this quiz level! 400 Water Drops have been deducted.",
+        [{ text: "OK" }]
+      );
+    } else {
+      Alert.alert(
+        "Not Enough Score",
+        `You need 400 Water Drops score to unlock this level. You currently have ${waterDropsTotalScore} Water Drops.`,
+        [{ text: "OK" }]
+      );
+    }
+  };
 
   const renderQuizCard = ({item, index}) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('QuizPlayScreen', {quizId: item.id})}
+      onPress={() => item.isActive && navigation.navigate('QuizPlayScreen', {quizId: item.id})}
       disabled={!item.isActive}>
       <BlurView style={styles.cardBlur} blurType="light" blurAmount={10}>
         <View style={styles.cardContent}>
@@ -44,6 +63,13 @@ const QuizLevelsGrid = ({navigation}) => {
                 source={require('../../assets/icon/ui/lock.png')}
                 style={styles.lockIcon}
               />
+              {waterDropsTotalScore >= 400 && (
+                <TouchableOpacity
+                  style={styles.unlockButton}
+                  onPress={() => handleUnlock(item.id, index)}>
+                  <Text style={styles.unlockButtonText}>Unlock (400 Drops)</Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
         </View>
@@ -55,6 +81,7 @@ const QuizLevelsGrid = ({navigation}) => {
     <QuizLayout>
       <View style={styles.container}>
         <Text style={styles.headerText}>Quiz Levels</Text>
+        <Text style={styles.scoreText}>Water Drops: {waterDropsTotalScore}</Text>
         <FlatList
           data={quizData}
           renderItem={renderQuizCard}
@@ -152,5 +179,23 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     tintColor: 'rgba(255, 255, 255, 0.9)',
+    marginBottom: 10,
+  },
+  unlockButton: {
+    backgroundColor: Color.blue,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 15,
+  },
+  unlockButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  scoreText: {
+    fontSize: 18,
+    color: Color.blue,
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });

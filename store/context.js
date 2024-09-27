@@ -6,10 +6,11 @@ export const FallsContext = createContext({});
 
 export const FallsProvider = ({ children }) => {
   const [quizData, setQuizData] = useState(initialQuizData);
+  const [waterDropsTotalScore, setWaterDropsTotalScore] = useState(0);
 
   useEffect(() => {
-    // Load saved quiz data from AsyncStorage when the app starts
     loadQuizData();
+    loadWaterDropsTotalScore();
   }, []);
 
   const loadQuizData = async () => {
@@ -20,6 +21,17 @@ export const FallsProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error loading quiz data:', error);
+    }
+  };
+
+  const loadWaterDropsTotalScore = async () => {
+    try {
+      const totalScore = await AsyncStorage.getItem('totalScore');
+      if (totalScore !== null) {
+        setWaterDropsTotalScore(parseInt(totalScore));
+      }
+    } catch (error) {
+      console.error('Error loading Water Drops total score:', error);
     }
   };
 
@@ -48,10 +60,32 @@ export const FallsProvider = ({ children }) => {
     }
   };
 
+  const updateWaterDropsTotalScore = async (newScore) => {
+    try {
+      await AsyncStorage.setItem('totalScore', newScore.toString());
+      setWaterDropsTotalScore(newScore);
+    } catch (error) {
+      console.error('Error updating Water Drops total score:', error);
+    }
+  };
+
+  const checkAndUnlockQuizLevels = () => {
+    const updatedQuizData = quizData.map((quiz, index) => {
+      if (index > 0 && !quiz.isActive && waterDropsTotalScore >= 400 * index) {
+        return { ...quiz, isActive: true };
+      }
+      return quiz;
+    });
+    saveQuizData(updatedQuizData);
+  };
+
   const value = {
     quizData,
+    waterDropsTotalScore,
     updateQuizProgress,
     unlockNextLevel,
+    updateWaterDropsTotalScore,
+    checkAndUnlockQuizLevels,
   };
 
   return (
