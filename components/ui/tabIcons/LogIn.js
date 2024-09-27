@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     // resizeMode: 'contain',
   },
   focusedContainer: {

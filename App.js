@@ -73,7 +73,7 @@ const TabMenu = () => {
             left: 10,
             right: 10,
             elevation: 5,
-            borderRadius: 15,
+            borderRadius: 22,
             height: 80,
             shadowColor: '#000',
             shadowOffset: {

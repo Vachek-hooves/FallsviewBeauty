@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#98FB98', // Pale Green
   },
   icon: {
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
   },
 });
