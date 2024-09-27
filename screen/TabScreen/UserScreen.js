@@ -86,6 +86,7 @@ const UserScreen = () => {
       <View style={styles.tableContainer}>
         <Text style={styles.tableHeader}>User Progress</Text>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={quizData}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
@@ -94,8 +95,8 @@ const UserScreen = () => {
               <Text style={styles.tableCell}>{item.highScore || 0}</Text>
             </View>
           )}
+          contentContainerStyle={styles.flatListContent}
         />
-        <View style={{height: 100}}></View>
       </View>
     );
   };
@@ -144,6 +145,7 @@ const UserScreen = () => {
         </BlurredView>
         {renderProgressTable()}
       </View>
+       
     </TabLayout>
   );
 };
@@ -213,12 +215,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   tableContainer: {
+    // flex: 1,
     width: '100%',
     marginTop: 20,
     borderRadius: 10,
-    // backgroundColor: 'rgba(255, 255, 255, 0.1)',
     backgroundColor: Color.blue + 90,
     padding: 10,
+    // height:'100%'
+    height: 450,
+  },
+  flatListContent: {
+    // flexGrow: 1,
+    // height:300
+    height: '130%',
   },
   tableHeader: {
     fontSize: 20,
