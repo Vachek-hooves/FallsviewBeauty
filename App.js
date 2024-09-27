@@ -7,7 +7,6 @@ import {
   ArticleScreen,
   QuizIntroScreen,
   WaterDropsScreen,
-  WelcomeScreen,
   UserScreen,
 } from './screen/TabScreen';
 import {
@@ -24,6 +23,7 @@ import {
   WaterDropsLevelsGrid,
   WaterDropsPlayGameScreen,
   WaterfallDetails,
+  WelcomeScreen,
 } from './screen/StackScreen';
 import {
   AppState,
@@ -171,6 +171,7 @@ function App() {
           screenOptions={{
             headerShown: false,
           }}>
+          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <Stack.Screen name="TabMenu" component={TabMenu} />
           <Stack.Screen
             name="WaterDropsPlayGameScreen"

@@ -95,6 +95,7 @@ const UserScreen = () => {
             </View>
           )}
         />
+        <View style={{height: 100}}></View>
       </View>
     );
   };
