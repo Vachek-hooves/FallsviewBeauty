@@ -7,12 +7,12 @@ workflow:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier:
+        bundle_identifier: com.fallsview.beauty
       vars:
-        APP_STORE_APPLE_ID:
-        BUNDLE_ID:
-        XCODE_WORKSPACE: 
-        CODE_SCHEME:
+        APP_STORE_APPLE_ID: 6723882362
+        BUNDLE_ID: 'com.fallsview.beauty'
+        XCODE_WORKSPACE:  'FallsviewBeauty.xcworkspace'
+        CODE_SCHEME: 'FallsviewBeauty'
     scripts:
       - name: Install node modules
         script: |
