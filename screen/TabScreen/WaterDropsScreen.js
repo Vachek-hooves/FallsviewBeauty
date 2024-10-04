@@ -5,7 +5,7 @@ import {TabLayout} from '../../components/layout';
 import {BlurView} from '@react-native-community/blur';
 import {Color} from '../../constant/color';
 import {useCustomContext} from '../../store/context';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const WaterDropsScreen = ({navigation}) => {
   const {quizData} = useCustomContext(); // Get quiz data from context
@@ -25,7 +25,7 @@ const WaterDropsScreen = ({navigation}) => {
       fetchUserData();
       calculateQuizTotalScore();
       fetchWaterDropsTotalScore();
-    }, [])
+    }, []),
   );
 
   const fetchUserData = async () => {
@@ -42,7 +42,10 @@ const WaterDropsScreen = ({navigation}) => {
   };
 
   const calculateQuizTotalScore = () => {
-    const score = quizData.reduce((acc, quiz) => acc + (quiz.highScore || 0), 0);
+    const score = quizData.reduce(
+      (acc, quiz) => acc + (quiz.highScore || 0),
+      0,
+    );
     setQuizTotalScore(score);
   };
 
@@ -65,8 +68,12 @@ const WaterDropsScreen = ({navigation}) => {
             <Image source={{uri: userData.image}} style={styles.userImage} />
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{userData.name}</Text>
-              <Text style={styles.userScore}>Quiz Total Score: {quizTotalScore}</Text>
-              <Text style={styles.userScore}>Water Drops Total Score: {waterDropsTotalScore}</Text>
+              <Text style={styles.userScore}>
+                Quiz Total Score: {quizTotalScore}
+              </Text>
+              <Text style={styles.userScore}>
+                Water Drops Total Score: {waterDropsTotalScore}
+              </Text>
               {/* <Text style={styles.userScore}>Overall Total Score: {quizTotalScore + waterDropsTotalScore}</Text> */}
             </View>
           </View>
@@ -175,12 +182,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)', // Add this line to make the background more white
   },
   cardBlur: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Add this line to make the blur more white
   },
   cardIcon: {
     width: 90,
@@ -192,11 +201,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Color.blue,
     textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)', // Add this line for better readability
+    textShadowOffset: {width: 1, height: 1}, // Add this line for better readability
+    textShadowRadius: 2, // Add this line for better readability
   },
   cardSubtitle: {
     fontSize: 14,
     color: '#333',
     textAlign: 'center',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)', // Add this line for better readability
+    textShadowOffset: {width: 0.5, height: 0.5}, // Add this line for better readability
+    textShadowRadius: 1, // Add this line for better readability
   },
   headerBlur: {
     justifyContent: 'center',
@@ -205,5 +220,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
 });

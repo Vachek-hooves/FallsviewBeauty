@@ -324,12 +324,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Color.blue,
     textAlign: 'center',
+    color: Color.white,
   },
   scoreText: {
     fontSize: 18,
     color: Color.blue,
     textAlign: 'center',
     marginBottom: 20,
+    color: Color.white,
   },
   questionCard: {
     borderRadius: 20,
@@ -421,6 +423,6 @@ const styles = StyleSheet.create({
   containerResults: {
     width: '100%',
     flex: 1,
-    marginTop: height*0.2
+    marginTop: height * 0.2,
   },
 });

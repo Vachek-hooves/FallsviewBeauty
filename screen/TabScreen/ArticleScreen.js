@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     color: Color.blue,
     textAlign: 'center',
     marginBottom: 20,
-    // color: Color.white,
+    color: Color.white,
   },
   card: {
     width: CARD_WIDTH,
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   cardTextContainer: {
     flex: 1,

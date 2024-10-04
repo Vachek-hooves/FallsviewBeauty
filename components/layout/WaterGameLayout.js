@@ -11,7 +11,8 @@ const WaterGameLayout = ({children}) => {
   return (
     <ImageBackground
       blurRadius={0}
-      source={require('../../assets/img/bg/waterfall2.jpg')}
+      // source={require('../../assets/img/bg/waterfall2.jpg')}
+      source={require('../../assets/img/newBg/bg.png')}
       style={{flex: 1, alignItems: 'center'}}>
       <SafeAreaView>{children}</SafeAreaView>
     </ImageBackground>

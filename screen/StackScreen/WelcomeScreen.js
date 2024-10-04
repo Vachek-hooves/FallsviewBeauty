@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
   blur: {
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)', // Light background for blur effect
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Light background for blur effect
+    height: 200,
+    justifyContent:'center'
   },
   content: {
     alignItems: 'center',

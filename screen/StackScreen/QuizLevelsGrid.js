@@ -20,22 +20,27 @@ const CARD_WIDTH = width * 0.9;
 const CARD_HEIGHT = 120;
 
 const QuizLevelsGrid = ({navigation}) => {
-  const {quizData, waterDropsTotalScore, checkAndUnlockQuizLevels, updateWaterDropsTotalScore} = useCustomContext();
+  const {
+    quizData,
+    waterDropsTotalScore,
+    checkAndUnlockQuizLevels,
+    updateWaterDropsTotalScore,
+  } = useCustomContext();
 
   const handleUnlock = (quizId, index) => {
     if (waterDropsTotalScore >= 400) {
       checkAndUnlockQuizLevels();
       updateWaterDropsTotalScore(waterDropsTotalScore - 400);
       Alert.alert(
-        "Quiz Level Unlocked",
+        'Quiz Level Unlocked',
         "You've successfully unlocked this quiz level! 400 Water Drops have been deducted.",
-        [{ text: "OK" }]
+        [{text: 'OK'}],
       );
     } else {
       Alert.alert(
-        "Not Enough Score",
+        'Not Enough Score',
         `You need 400 Water Drops score to unlock this level. You currently have ${waterDropsTotalScore} Water Drops.`,
-        [{ text: "OK" }]
+        [{text: 'OK'}],
       );
     }
   };
@@ -43,7 +48,10 @@ const QuizLevelsGrid = ({navigation}) => {
   const renderQuizCard = ({item, index}) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => item.isActive && navigation.navigate('QuizPlayScreen', {quizId: item.id})}
+      onPress={() =>
+        item.isActive &&
+        navigation.navigate('QuizPlayScreen', {quizId: item.id})
+      }
       disabled={!item.isActive}>
       <BlurView style={styles.cardBlur} blurType="light" blurAmount={10}>
         <View style={styles.cardContent}>
@@ -67,7 +75,9 @@ const QuizLevelsGrid = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.unlockButton}
                   onPress={() => handleUnlock(item.id, index)}>
-                  <Text style={styles.unlockButtonText}>Unlock (400 Drops)</Text>
+                  <Text style={styles.unlockButtonText}>
+                    Unlock (400 Drops)
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -81,7 +91,9 @@ const QuizLevelsGrid = ({navigation}) => {
     <QuizLayout>
       <View style={styles.container}>
         <Text style={styles.headerText}>Quiz Levels</Text>
-        <Text style={styles.scoreText}>Water Drops: {waterDropsTotalScore}</Text>
+        <Text style={styles.scoreText}>
+          Water Drops: {waterDropsTotalScore}
+        </Text>
         <FlatList
           data={quizData}
           renderItem={renderQuizCard}
@@ -89,7 +101,7 @@ const QuizLevelsGrid = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContainer}
         />
-        <View style={{height:50}}></View>
+        <View style={{height: 50}}></View>
       </View>
       <ReturnIcon />
     </QuizLayout>
@@ -109,6 +121,7 @@ const styles = StyleSheet.create({
     color: Color.blue,
     textAlign: 'center',
     marginBottom: 20,
+    color: Color.white,
   },
   listContainer: {
     paddingBottom: 20,
@@ -128,6 +141,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   cardBlur: {
     flex: 1,
@@ -150,7 +164,7 @@ const styles = StyleSheet.create({
   },
   cardSubtitle: {
     fontSize: 14,
-    color: '#333',
+    // color: '#333',
   },
   highScoreContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -163,6 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Color.blue,
     fontWeight: 'bold',
+    
   },
   highScoreValue: {
     fontSize: 18,
@@ -196,6 +211,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Color.blue,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 10,color: Color.white,
   },
 });

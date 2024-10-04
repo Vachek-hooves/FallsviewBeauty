@@ -1,24 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {FallsProvider} from './store/context';
-import {
-  ArticleScreen,
-  QuizIntroScreen,
-  WaterDropsScreen,
-  UserScreen,
-} from './screen/TabScreen';
-import {
-  WaterfallTab,
-  ArticleTab,
-  QuziTab,
-  MelodyTab,
-  LogIn,
-} from './components/ui/tabIcons';
+import {ArticleScreen, WaterDropsScreen, UserScreen} from './screen/TabScreen';
+import {WaterfallTab, ArticleTab, LogIn} from './components/ui/tabIcons';
 import {
   ArticleDetail,
-  FallsGameLevelsScreen,
   QuizLevelsGrid,
   WaterDropsLevelsGrid,
   WaterDropsPlayGameScreen,
@@ -45,6 +33,11 @@ import {
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const images = [
+  require('./assets/img/load/Loader1.png'),
+  require('./assets/img/load/Loader2.png'),
+];
 
 const TabMenu = () => {
   return (
@@ -134,8 +127,12 @@ const TabMenu = () => {
   );
 };
 
+
+
 function App() {
   const [isPlayerReady, setIsPlayerReady] = useState(false);
+  const [id, setItem] = useState(0);
+  const animation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const initializePlayer = async () => {
@@ -164,6 +161,42 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    fadeStart();
+    const timeOut = setTimeout(() => {
+      navigateToMenu();
+    }, 6000);
+    return () => clearTimeout(timeOut);
+  }, []);
+
+  const fadeStart = () => {
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start(() => fadeFinish());
+  };
+
+  const fadeFinish = () => {
+    Animated.timing(animation, {
+      toValue: 0,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start(() => {
+      setItem(prevState => prevState + 1);
+      fadeStart();
+    });
+  };
+
+  const navigateToMenu = () => {
+    setItem(2);
+  };
+
+  if (!isPlayerReady) {
+    // You might want to show a loading screen here
+    return null;
+  }
+
   return (
     <FallsProvider>
       <NavigationContainer>
@@ -171,7 +204,28 @@ function App() {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+            {
+              id < 2 ? (
+                <Stack.Screen name="Welcome" options={{headerShown: false}}>
+                  {() => (
+                    <View style={{flex: 1}}>
+                      <Animated.Image
+                        source={images[id]}
+                        style={[
+                          {width: '100%', flex: 1},
+                          {opacity: animation},
+                        ]}></Animated.Image>
+                    </View>
+                  )}
+                </Stack.Screen>
+              ) : (
+                <Stack.Screen
+                  name="WelcomeScreen"
+                  component={WelcomeScreen}
+                />
+              )
+            }
+          {/* <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} /> */}
           <Stack.Screen name="TabMenu" component={TabMenu} />
           <Stack.Screen
             name="WaterDropsPlayGameScreen"

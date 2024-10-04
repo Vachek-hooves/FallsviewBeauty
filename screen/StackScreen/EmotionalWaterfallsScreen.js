@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   },
   cardBlur: {
     flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   cardImage: {
     width: '100%',
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: 15,
+    
   },
   cardTitle: {
     fontSize: 16,
